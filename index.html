@@ -1,325 +1,448 @@
-<!-- PONKAN SMP サーバー参加セクション (Modern Dark UI) -->
-<div class="server-wrapper">
-  <div class="glow-bg"></div>
-  
-  <div class="server-header">
-    <div class="status-indicator">
-      <span class="ping-dot"></span>
-      <span class="status-text">ONLINE</span>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PONKAN PORTAL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+  <style>
+    /* 画面全体の完全ダークモード固定 */
+    html, body {
+      background-color: #0b0f19 !important;
+      color: #f3f4f6 !important;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      box-sizing: border-box;
+    }
+
+    *, *::before, *::after {
+      box-sizing: inherit;
+    }
+
+    /* ポータル外枠ラッパー */
+    .portal-root {
+      position: relative;
+      max-width: 860px;
+      margin: 30px auto;
+      padding: 32px 20px;
+      background: #0b0f19;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    /* 背景のアンビエントネオングロー */
+    .portal-ambient-glow {
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 500px;
+      height: 240px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, rgba(88, 101, 242, 0.12) 50%, transparent 70%);
+      filter: blur(60px);
+      pointer-events: none;
+    }
+
+    /* ヘッダー */
+    .portal-header {
+      text-align: center;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .portal-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 12px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 100px;
+      margin-bottom: 10px;
+    }
+
+    .portal-pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulseAnim 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseAnim {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.5; }
+    }
+
+    .portal-status-txt {
+      font-size: 11px;
+      font-weight: 700;
+      color: #10b981;
+      letter-spacing: 0.08em;
+    }
+
+    .portal-main-title {
+      font-size: 28px;
+      font-weight: 800;
+      margin: 0 0 4px 0;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .portal-main-desc {
+      font-size: 13px;
+      color: #9ca3af;
+      margin: 0;
+    }
+
+    /* ネタバナー */
+    .portal-discord-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(135deg, rgba(234, 88, 12, 0.15) 0%, rgba(88, 101, 242, 0.1) 100%);
+      border: 1px solid rgba(234, 88, 12, 0.35);
+      border-radius: 16px;
+      padding: 14px 18px;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .discord-left-group { display: flex; align-items: center; gap: 12px; }
+    .discord-badge-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(234, 88, 12, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .discord-name { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+    .discord-sub { font-size: 12px; color: #fb923c; }
+    
+    .portal-btn-discord {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #ea580c;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .portal-btn-discord:hover { background: #c2410c; transform: translateY(-1px); }
+
+    /* セクション区切り */
+    .portal-section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0 14px 0;
+      font-size: 11px;
+      font-weight: 700;
+      color: #64748b;
+      letter-spacing: 0.08em;
+    }
+    .portal-hr { flex: 1; height: 1px; background: rgba(255, 255, 255, 0.08); }
+
+    /* グリッドレイアウト（はみ出し防止対応） */
+    .portal-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .portal-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    @media (max-width: 768px) {
+      .portal-grid-2, .portal-grid-3 {
+        grid-template-columns: 1fr;
+      }
+      .portal-discord-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .portal-btn-discord {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    /* カード本体 */
+    .portal-card {
+      background: rgba(18, 24, 38, 0.7);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 16px 14px;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      transition: all 0.25s ease;
+    }
+
+    .portal-card:hover {
+      border-color: rgba(255, 255, 255, 0.22);
+      transform: translateY(-2px);
+    }
+
+    .portal-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .portal-badge {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 3px 7px;
+      border-radius: 6px;
+    }
+    .badge-java { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+    .badge-bedrock { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+    .badge-mc { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+    .badge-xbox { background: rgba(16, 124, 16, 0.2); color: #4ade80; }
+    .badge-roblox { background: rgba(225, 29, 72, 0.18); color: #fb7185; }
+
+    .portal-tag-sub { font-size: 10px; color: #6b7280; font-weight: 600; }
+    .portal-card-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+    .portal-card-info { font-size: 11px; color: #9ca3af; margin-bottom: 12px; }
+
+    /* コピーバー（文字あふれ防止） */
+    .portal-copy-box { margin-top: auto; }
+    .portal-copy-box label {
+      display: block;
+      font-size: 9px;
+      font-weight: 700;
+      color: #64748b;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    .portal-copy-bar {
+      display: flex;
+      align-items: center;
+      background: rgba(8, 12, 20, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 3px 4px 3px 8px;
+      min-width: 0;
+    }
+    .portal-copy-bar:focus-within { border-color: rgba(255, 255, 255, 0.3); }
+
+    .portal-copy-bar input {
+      flex: 1;
+      min-width: 0;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #e2e8f0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .portal-copy-bar button {
+      flex-shrink: 0;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 7px;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .portal-copy-bar button:hover { background: #fff; color: #0b0f19; }
+    .portal-copy-bar button.copied { background: #10b981 !important; color: #fff !important; }
+
+    .portal-hint { font-size: 10px; color: #64748b; margin-top: 4px; display: block; }
+  </style>
+</head>
+<body>
+
+  <div class="portal-root">
+    <div class="portal-ambient-glow"></div>
+
+    <!-- ヘッダー -->
+    <div class="portal-header">
+      <div class="portal-status-pill">
+        <span class="portal-pulse-dot"></span>
+        <span class="portal-status-txt">SERVER ONLINE</span>
+      </div>
+      <h1 class="portal-main-title">PONKAN PORTAL</h1>
+      <p class="portal-main-desc">Minecraft サーバー参加アドレス & ゲーマータグ一覧</p>
     </div>
-    <h2 class="server-title">JOIN PONKAN’S MINECRAFT SERVER</h2>
-    <p class="server-subtitle">Java & Bedrock Cross-play Server</p>
+
+    <!-- ネタページへのリンクバナー -->
+    <div class="portal-discord-banner">
+      <div class="discord-left-group">
+        <div class="discord-badge-icon">
+          <span style="font-size: 22px;">🍊</span>
+        </div>
+        <div>
+          <div class="discord-name">Discord (※自己責任で開いてね)</div>
+          <div class="discord-sub">押すなよ？絶対に押すなよ？？</div>
+        </div>
+      </div>
+      <a href="https://ponkan.fun/superfun/" target="_blank" rel="noopener noreferrer" class="portal-btn-discord">
+        <span>秘密の部屋へ 🚀</span>
+      </a>
+    </div>
+
+    <!-- セクション 1: Minecraft サーバーアドレス -->
+    <div class="portal-section-header">
+      <span>MINECRAFT SERVER ADDRESS</span>
+      <div class="portal-hr"></div>
+    </div>
+
+    <div class="portal-grid-2">
+      <!-- Java版 -->
+      <div class="portal-card">
+        <div class="portal-card-top">
+          <span class="portal-badge badge-java">Java Edition</span>
+          <span class="portal-tag-sub">PC / Mac / Linux</span>
+        </div>
+        <div class="portal-card-title">Java版で参加</div>
+        <div class="portal-card-info">公式ランチャーのマルチプレイから接続</div>
+
+        <div class="portal-copy-box">
+          <label>SERVER ADDRESS</label>
+          <div class="portal-copy-bar">
+            <input type="text" value="mc.ponkan.fun" id="ip-java" readonly>
+            <button onclick="portalCopy('ip-java', this)"><span>COPY</span></button>
+          </div>
+          <span class="portal-hint">※ポート不要（自動解決）</span>
+        </div>
+      </div>
+
+      <!-- 統合版 (Geyser) -->
+      <div class="portal-card">
+        <div class="portal-card-top">
+          <span class="portal-badge badge-bedrock">Bedrock Edition</span>
+          <span class="portal-tag-sub">iOS / Android / Switch / PS</span>
+        </div>
+        <div class="portal-card-title">統合版で参加 (Geyser)</div>
+        <div class="portal-card-info">「サーバーを追加」からアドレス・ポートを入力</div>
+
+        <div class="portal-copy-box">
+          <label>SERVER ADDRESS</label>
+          <div class="portal-copy-bar">
+            <input type="text" value="bedrock.ponkan.fun" id="ip-bedrock" readonly>
+            <button onclick="portalCopy('ip-bedrock', this)"><span>COPY</span></button>
+          </div>
+
+          <label style="margin-top: 8px;">PORT</label>
+          <div class="portal-copy-bar">
+            <input type="text" value="54512" id="port-bedrock" readonly>
+            <button onclick="portalCopy('port-bedrock', this)"><span>COPY</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- セクション 2: ゲームID / ゲーマータグ -->
+    <div class="portal-section-header">
+      <span>GAMER TAGS & IDS</span>
+      <div class="portal-hr"></div>
+    </div>
+
+    <div class="portal-grid-3">
+      <!-- Minecraft ID -->
+      <div class="portal-card">
+        <div class="portal-card-top">
+          <span class="portal-badge badge-mc">Minecraft</span>
+        </div>
+        <div class="portal-card-title">Java MC ID</div>
+        <div class="portal-card-info">Java版フレンド・ホワイトリスト用</div>
+
+        <div class="portal-copy-box">
+          <label>MC USERNAME</label>
+          <div class="portal-copy-bar">
+            <input type="text" value="_Ponkan" id="id-mc" readonly>
+            <button onclick="portalCopy('id-mc', this)"><span>COPY</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Xbox Gamertag -->
+      <div class="portal-card">
+        <div class="portal-card-top">
+          <span class="portal-badge badge-xbox">Xbox Live</span>
+        </div>
+        <div class="portal-card-title">Xbox ゲーマータグ</div>
+        <div class="portal-card-info">統合版フレンド・Xbox招待用</div>
+
+        <div class="portal-copy-box">
+          <label>GAMERTAG</label>
+          <div class="portal-copy-bar">
+            <input type="text" value="Ponkan_Xbox" id="id-xbox" readonly>
+            <button onclick="portalCopy('id-xbox', this)"><span>COPY</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Roblox ID -->
+      <div class="portal-card">
+        <div class="portal-card-top">
+          <span class="portal-badge badge-roblox">Roblox</span>
+        </div>
+        <div class="portal-card-title">Roblox ユーザー名</div>
+        <div class="portal-card-info">Robloxフレンド追加・参加用</div>
+
+        <div class="portal-copy-box">
+          <label>ROBLOX USERNAME</label>
+          <div class="portal-copy-bar">
+            <input type="text" value="Ponkan_rblx" id="id-roblox" readonly>
+            <button onclick="portalCopy('id-roblox', this)"><span>COPY</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
-  <div class="server-grid">
-    <!-- Java Edition Card -->
-    <div class="server-card java-card">
-      <div class="card-glow"></div>
-      <div class="card-head">
-        <div class="badge java-badge">Java Edition</div>
-        <span class="client-type">PC / Mac / Linux</span>
-      </div>
-      <h3>Java版で参加</h3>
-      <p class="card-desc">公式ランチャーからそのまま接続可能</p>
-
-      <div class="input-block">
-        <label>SERVER ADDRESS</label>
-        <div class="custom-input-group">
-          <input type="text" value="mc.ponkan.fun" id="java-ip" readonly>
-          <button onclick="copyAddress('java-ip', this)" class="btn-glow">
-            <span class="btn-text">COPY</span>
-          </button>
-        </div>
-        <div class="helper-text">※ポート入力不要</div>
-      </div>
-    </div>
-
-    <!-- Bedrock Edition Card -->
-    <div class="server-card bedrock-card">
-      <div class="card-glow"></div>
-      <div class="card-head">
-        <div class="badge bedrock-badge">Bedrock Edition</div>
-        <span class="client-type">iOS / Android / Switch / PS</span>
-      </div>
-      <h3>統合版で参加</h3>
-      <p class="card-desc">スマホ・家庭用ゲーム機からGeyser経由で接続</p>
-
-      <div class="input-block">
-        <label>SERVER ADDRESS</label>
-        <div class="custom-input-group">
-          <input type="text" value="bedrock.ponkan.fun" id="bedrock-ip" readonly>
-          <button onclick="copyAddress('bedrock-ip', this)" class="btn-glow">
-            <span class="btn-text">COPY</span>
-          </button>
-        </div>
-
-        <label style="margin-top: 14px;">PORT</label>
-        <div class="custom-input-group">
-          <input type="text" value="54512" id="bedrock-port" readonly>
-          <button onclick="copyAddress('bedrock-port', this)" class="btn-glow">
-            <span class="btn-text">COPY</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
-
-:root {
-  --bg-color: #0b0f19;
-  --card-bg: rgba(18, 24, 38, 0.7);
-  --border-color: rgba(255, 255, 255, 0.08);
-  --accent-green: #10b981;
-  --accent-blue: #3b82f6;
-  --text-main: #f3f4f6;
-  --text-sub: #9ca3af;
-}
-
-.server-wrapper {
-  position: relative;
-  max-width: 860px;
-  margin: 40px auto;
-  padding: 40px 24px;
-  background: var(--bg-color);
-  border-radius: 24px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  color: var(--text-main);
-  overflow: hidden;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-}
-
-.glow-bg {
-  position: absolute;
-  top: -20%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 500px;
-  height: 250px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, rgba(59, 130, 246, 0.1) 50%, transparent 70%);
-  filter: blur(60px);
-  pointer-events: none;
-}
-
-.server-header {
-  text-align: center;
-  margin-bottom: 35px;
-  position: relative;
-  z-index: 1;
-}
-
-.status-indicator {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  border-radius: 100px;
-  margin-bottom: 12px;
-}
-
-.ping-dot {
-  width: 8px;
-  height: 8px;
-  background-color: var(--accent-green);
-  border-radius: 50%;
-  box-shadow: 0 0 10px var(--accent-green);
-  animation: pulse 2s infinite ease-in-out;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.4); opacity: 0.6; }
-}
-
-.status-text {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  color: var(--accent-green);
-}
-
-.server-title {
-  font-size: 32px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  margin: 0 0 6px 0;
-  background: linear-gradient(135deg, #ffffff 30%, #9ca3af 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.server-subtitle {
-  font-size: 14px;
-  color: var(--text-sub);
-  margin: 0;
-}
-
-.server-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  position: relative;
-  z-index: 1;
-}
-
-@media (max-width: 720px) {
-  .server-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.server-card {
-  position: relative;
-  background: var(--card-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  padding: 28px;
-  display: flex;
-  flex-direction: column;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.server-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
-}
-
-.java-card:hover { box-shadow: 0 20px 40px -15px rgba(16, 185, 129, 0.15); }
-.bedrock-card:hover { box-shadow: 0 20px 40px -15px rgba(59, 130, 246, 0.15); }
-
-.card-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.badge {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 4px 10px;
-  border-radius: 8px;
-}
-
-.java-badge { background: rgba(16, 185, 129, 0.15); color: #34d399; }
-.bedrock-badge { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
-
-.client-type {
-  font-size: 11px;
-  color: #6b7280;
-  font-weight: 500;
-}
-
-.server-card h3 {
-  font-size: 20px;
-  font-weight: 700;
-  margin: 0 0 6px 0;
-  color: #ffffff;
-}
-
-.card-desc {
-  font-size: 13px;
-  color: var(--text-sub);
-  margin: 0 0 24px 0;
-  line-height: 1.4;
-}
-
-.input-block {
-  margin-top: auto;
-}
-
-.input-block label {
-  display: block;
-  font-size: 10px;
-  font-weight: 700;
-  color: #6b7280;
-  letter-spacing: 0.08em;
-  margin-bottom: 6px;
-}
-
-.custom-input-group {
-  display: flex;
-  background: rgba(10, 14, 23, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 12px;
-  padding: 4px;
-  transition: border-color 0.2s;
-}
-
-.custom-input-group:focus-within {
-  border-color: rgba(255, 255, 255, 0.3);
-}
-
-.custom-input-group input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: #e5e7eb;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 14px;
-  padding: 8px 12px;
-  font-weight: 500;
-}
-
-.btn-glow {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-  border-radius: 8px;
-  padding: 0 16px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
-
-.btn-glow:hover {
-  background: #ffffff;
-  color: #0b0f19;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
-}
-
-.btn-glow.copied {
-  background: var(--accent-green) !important;
-  color: #ffffff !important;
-  box-shadow: 0 0 15px rgba(16, 185, 129, 0.4) !important;
-}
-
-.helper-text {
-  font-size: 11px;
-  color: #6b7280;
-  margin-top: 8px;
-}
-</style>
-
-<script>
-function copyAddress(id, btn) {
-  const input = document.getElementById(id);
-  input.select();
-  input.setSelectionRange(0, 99999);
-  navigator.clipboard.writeText(input.value).then(() => {
-    const textSpan = btn.querySelector('.btn-text');
-    const originalText = textSpan.innerText;
-    
-    btn.classList.add('copied');
-    textSpan.innerText = 'COPIED!';
-    
-    setTimeout(() => {
-      btn.classList.remove('copied');
-      textSpan.innerText = originalText;
-    }, 1500);
-  });
-}
-</script>
+  <script>
+    function portalCopy(id, btn) {
+      const input = document.getElementById(id);
+      input.select();
+      input.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(input.value).then(() => {
+        const span = btn.querySelector('span');
+        const orig = span.innerText;
+        btn.classList.add('copied');
+        span.innerText = 'COPIED!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          span.innerText = orig;
+        }, 1300);
+      });
+    }
+  </script>
+</body>
+</html>
