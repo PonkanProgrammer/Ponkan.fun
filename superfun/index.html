@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⚠️ 警告: 重大なPONKAN領域 ⚠️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Plus+Jakarta+Sans:wght@800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      background-color: #050508;
+      color: #00ff66;
+      font-family: 'DotGothic16', 'Share Tech Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* サイバーグリッド背景 */
+    .cyber-bg {
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(0, 255, 102, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 102, 0.04) 1px, transparent 1px);
+      background-size: 30px 30px;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .warning-box {
+      position: relative;
+      z-index: 10;
+      max-width: 680px;
+      width: 90%;
+      background: rgba(10, 15, 20, 0.88);
+      border: 2px solid #ff0055;
+      box-shadow: 0 0 35px rgba(255, 0, 85, 0.4), inset 0 0 20px rgba(255, 0, 85, 0.2);
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .alert-header {
+      color: #ff0055;
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      animation: blink 0.8s infinite alternate;
+      margin-bottom: 15px;
+    }
+
+    @keyframes blink {
+      0% { opacity: 1; text-shadow: 0 0 15px #ff0055; }
+      100% { opacity: 0.3; text-shadow: none; }
+    }
+
+    .ponkan-icon {
+      font-size: 64px;
+      display: inline-block;
+      margin-bottom: 10px;
+      animation: spin 6s infinite linear;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    .log-terminal {
+      background: #000;
+      border: 1px solid #1f2937;
+      border-radius: 8px;
+      padding: 14px;
+      margin: 20px 0;
+      text-align: left;
+      font-size: 13px;
+      color: #38bdf8;
+      height: 110px;
+      overflow-y: auto;
+      line-height: 1.6;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+      position: relative;
+      min-height: 60px;
+    }
+
+    .btn-action {
+      background: #ff0055;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(255, 0, 85, 0.5);
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+
+    .btn-action:hover {
+      box-shadow: 0 0 25px rgba(255, 0, 85, 0.8);
+    }
+
+    .btn-fun {
+      background: #ea580c;
+      box-shadow: 0 0 15px rgba(234, 88, 12, 0.5);
+    }
+    .btn-fun:hover {
+      box-shadow: 0 0 25px rgba(234, 88, 12, 0.8);
+    }
+
+    /* 逃げるボタン */
+    #runaway-btn {
+      position: relative;
+      background: #374151;
+      color: #9ca3af;
+      box-shadow: none;
+      transition: all 0.15s ease;
+    }
+
+    /* 落下するみかんスタイル */
+    .falling-ponkan {
+      position: fixed;
+      top: -50px;
+      font-size: 28px;
+      z-index: 999;
+      pointer-events: none;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+      }
+    }
+
+    /* ブルースクリーン (BSoD) */
+    .bsod {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #0078d7;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 8vw;
+      z-index: 10000;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .bsod-face { font-size: 80px; margin-bottom: 20px; }
+    .bsod-title { font-size: 24px; margin-bottom: 20px; line-height: 1.4; }
+    .bsod-desc { font-size: 14px; opacity: 0.8; margin-top: 30px; }
+  </style>
+</head>
+<body>
+
+  <div class="cyber-bg"></div>
+
+  <div class="warning-box">
+    <div class="ponkan-icon">🍊</div>
+    <div class="alert-header">🚨 CRITICAL WARNING 🚨</div>
+    <p>あなたは開いてはならない「ぽんかん制御室」に侵入しました。</p>
+
+    <div class="log-terminal" id="terminal">
+      > SYSTEM ACCESS GRANTED...<br>
+      > SCANNING HOST PC...<br>
+      > DETECTED: ぽんかん過剰摂取の疑い<br>
+      > WARNING: ビタミンC濃度が限界を超えています<br>
+    </div>
+
+    <div class="btn-group">
+      <!-- 押すとみかんが無限に降る -->
+      <button class="btn-action btn-fun" onclick="spawnOranges()">🍊 ぽんかん爆撃</button>
+      
+      <!-- 押すとブルースクリーン -->
+      <button class="btn-action" onclick="triggerBSoD()">💣 自爆ボタン</button>
+      
+      <!-- 絶対にクリックできない逃げるボタン -->
+      <button class="btn-action" id="runaway-btn" onmouseover="runAway(this)">安全に戻る</button>
+    </div>
+
+    <div style="margin-top: 25px; font-size: 11px; opacity: 0.6;">
+      ※本物のDiscordやトップに戻りたい人は <a href="https://ponkan.fun" style="color: #38bdf8; text-decoration: underline;">ここをクリック</a>
+    </div>
+  </div>
+
+  <!-- ネタのブルースクリーン画面 -->
+  <div class="bsod" id="bsod-screen">
+    <div class="bsod-face">:(</div>
+    <div class="bsod-title">問題が発生したため、PONKAN を再起動する必要があります。<br>エラー情報を収集しています... (100% 完了)</div>
+    <div class="bsod-desc">
+      停止コード: CRITICAL_PONKAN_OVERFLOW<br>
+      失敗した内容: vitamin_c_driver.sys<br><br>
+      <span style="cursor: pointer; text-decoration: underline;" onclick="closeBSoD()">[ 画面をクリックして現実に復帰する ]</span>
+    </div>
+  </div>
+
+  <script>
+    // 逃げるボタン処理
+    function runAway(btn) {
+      const x = (Math.random() - 0.5) * 300;
+      const y = (Math.random() - 0.5) * 200;
+      btn.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    // ぽんかん（みかん）雨を降らせる処理
+    function spawnOranges() {
+      const term = document.getElementById('terminal');
+      term.innerHTML += `> ぽんかんが大量投下されました！<br>`;
+      term.scrollTop = term.scrollHeight;
+
+      for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+          const orange = document.createElement('div');
+          orange.className = 'falling-ponkan';
+          orange.innerText = ['🍊', '🍋', '🍹', '💣', '✨'][Math.floor(Math.random() * 5)];
+          orange.style.left = Math.random() * 100 + 'vw';
+          orange.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+          document.body.appendChild(orange);
+          setTimeout(() => orange.remove(), 4000);
+        }, i * 70);
+      }
+    }
+
+    // 偽ブルースクリーン発動
+    function triggerBSoD() {
+      document.getElementById('bsod-screen').style.display = 'flex';
+    }
+
+    function closeBSoD() {
+      document.getElementById('bsod-screen').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
