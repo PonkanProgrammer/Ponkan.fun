@@ -1,41 +1,64 @@
-<!-- サーバー参加案内セクション -->
-<div class="server-join-container">
-  <h2 class="server-title">PONKAN SMP サーバー参加方法</h2>
+<!-- PONKAN SMP サーバー参加セクション (Modern Dark UI) -->
+<div class="server-wrapper">
+  <div class="glow-bg"></div>
+  
+  <div class="server-header">
+    <div class="status-indicator">
+      <span class="ping-dot"></span>
+      <span class="status-text">ONLINE</span>
+    </div>
+    <h2 class="server-title">JOIN PONKAN’S MINECRAFT SERVER</h2>
+    <p class="server-subtitle">Java & Bedrock Cross-play Server</p>
+  </div>
 
   <div class="server-grid">
-    <!-- Java版カード -->
+    <!-- Java Edition Card -->
     <div class="server-card java-card">
-      <div class="card-badge">Java Edition (PC)</div>
+      <div class="card-glow"></div>
+      <div class="card-head">
+        <div class="badge java-badge">Java Edition</div>
+        <span class="client-type">PC / Mac / Linux</span>
+      </div>
       <h3>Java版で参加</h3>
-      <p class="desc">PCから参加する方</p>
-      
-      <div class="ip-box">
-        <label>サーバーアドレス</label>
-        <div class="copy-input-group">
+      <p class="card-desc">公式ランチャーからそのまま接続可能</p>
+
+      <div class="input-block">
+        <label>SERVER ADDRESS</label>
+        <div class="custom-input-group">
           <input type="text" value="mc.ponkan.fun" id="java-ip" readonly>
-          <button onclick="copyToClipboard('java-ip', this)" class="btn-copy">コピー</button>
+          <button onclick="copyAddress('java-ip', this)" class="btn-glow">
+            <span class="btn-text">COPY</span>
+          </button>
         </div>
-        <span class="note">※ポート番号の入力は不要です</span>
+        <div class="helper-text">※ポート入力不要</div>
       </div>
     </div>
 
-    <!-- 統合版 (Bedrock / Geyser) カード -->
+    <!-- Bedrock Edition Card -->
     <div class="server-card bedrock-card">
-      <div class="card-badge">Bedrock Edition (Geyser)</div>
+      <div class="card-glow"></div>
+      <div class="card-head">
+        <div class="badge bedrock-badge">Bedrock Edition</div>
+        <span class="client-type">iOS / Android / Switch / PS</span>
+      </div>
       <h3>統合版で参加</h3>
-      <p class="desc">スマホ / iPad / Switch / PS / XBOX / Windows版</p>
-      
-      <div class="ip-box">
-        <label>サーバーアドレス</label>
-        <div class="copy-input-group">
+      <p class="card-desc">スマホ・家庭用ゲーム機からGeyser経由で接続</p>
+
+      <div class="input-block">
+        <label>SERVER ADDRESS</label>
+        <div class="custom-input-group">
           <input type="text" value="bedrock.ponkan.fun" id="bedrock-ip" readonly>
-          <button onclick="copyToClipboard('bedrock-ip', this)" class="btn-copy">コピー</button>
+          <button onclick="copyAddress('bedrock-ip', this)" class="btn-glow">
+            <span class="btn-text">COPY</span>
+          </button>
         </div>
 
-        <label style="margin-top: 10px;">ポート番号</label>
-        <div class="copy-input-group">
+        <label style="margin-top: 14px;">PORT</label>
+        <div class="custom-input-group">
           <input type="text" value="54512" id="bedrock-port" readonly>
-          <button onclick="copyToClipboard('bedrock-port', this)" class="btn-copy">コピー</button>
+          <button onclick="copyAddress('bedrock-port', this)" class="btn-glow">
+            <span class="btn-text">COPY</span>
+          </button>
         </div>
       </div>
     </div>
@@ -43,138 +66,259 @@
 </div>
 
 <style>
-/* スタイル（デザイン） */
-.server-join-container {
-  max-width: 800px;
-  margin: 30px auto;
-  padding: 20px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  box-sizing: border-box;
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+:root {
+  --bg-color: #0b0f19;
+  --card-bg: rgba(18, 24, 38, 0.7);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --accent-green: #10b981;
+  --accent-blue: #3b82f6;
+  --text-main: #f3f4f6;
+  --text-sub: #9ca3af;
+}
+
+.server-wrapper {
+  position: relative;
+  max-width: 860px;
+  margin: 40px auto;
+  padding: 40px 24px;
+  background: var(--bg-color);
+  border-radius: 24px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--text-main);
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.glow-bg {
+  position: absolute;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, rgba(59, 130, 246, 0.1) 50%, transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+.server-header {
+  text-align: center;
+  margin-bottom: 35px;
+  position: relative;
+  z-index: 1;
+}
+
+.status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: 100px;
+  margin-bottom: 12px;
+}
+
+.ping-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--accent-green);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--accent-green);
+  animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+}
+
+.status-text {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--accent-green);
 }
 
 .server-title {
-  text-align: center;
-  font-size: 24px;
-  margin-bottom: 25px;
-  color: #2c3e50;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 6px 0;
+  background: linear-gradient(135deg, #ffffff 30%, #9ca3af 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.server-subtitle {
+  font-size: 14px;
+  color: var(--text-sub);
+  margin: 0;
 }
 
 .server-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 24px;
+  position: relative;
+  z-index: 1;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 720px) {
   .server-grid {
     grid-template-columns: 1fr;
   }
 }
 
 .server-card {
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e1e8ed;
+  position: relative;
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 28px;
   display: flex;
   flex-direction: column;
-  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.card-badge {
-  display: inline-block;
-  align-self: flex-start;
-  padding: 4px 8px;
+.server-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+}
+
+.java-card:hover { box-shadow: 0 20px 40px -15px rgba(16, 185, 129, 0.15); }
+.bedrock-card:hover { box-shadow: 0 20px 40px -15px rgba(59, 130, 246, 0.15); }
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.badge {
   font-size: 11px;
-  font-weight: bold;
-  border-radius: 6px;
-  background: #f0f4f8;
-  color: #555;
-  margin-bottom: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border-radius: 8px;
 }
 
-.java-card .card-badge { background: #e8f5e9; color: #2e7d32; }
-.bedrock-card .card-badge { background: #e3f2fd; color: #1565c0; }
+.java-badge { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+.bedrock-badge { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+
+.client-type {
+  font-size: 11px;
+  color: #6b7280;
+  font-weight: 500;
+}
 
 .server-card h3 {
-  margin: 0 0 5px 0;
-  font-size: 18px;
-  color: #333;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  color: #ffffff;
 }
 
-.server-card .desc {
+.card-desc {
   font-size: 13px;
-  color: #666;
-  margin: 0 0 15px 0;
+  color: var(--text-sub);
+  margin: 0 0 24px 0;
+  line-height: 1.4;
 }
 
-.ip-box {
+.input-block {
   margin-top: auto;
 }
 
-.ip-box label {
+.input-block label {
   display: block;
-  font-size: 12px;
-  font-weight: bold;
-  color: #777;
-  margin-bottom: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #6b7280;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
 }
 
-.copy-input-group {
+.custom-input-group {
   display: flex;
-  gap: 6px;
+  background: rgba(10, 14, 23, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  padding: 4px;
+  transition: border-color 0.2s;
 }
 
-.copy-input-group input {
+.custom-input-group:focus-within {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.custom-input-group input {
   flex: 1;
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #e5e7eb;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 14px;
-  background: #f9f9f9;
-  color: #333;
-  font-family: monospace;
+  padding: 8px 12px;
+  font-weight: 500;
 }
 
-.btn-copy {
-  padding: 8px 14px;
-  background-color: #2ecc71;
-  color: white;
-  border: none;
-  border-radius: 6px;
+.btn-glow {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 0 16px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
   cursor: pointer;
-  font-size: 13px;
-  font-weight: bold;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease;
   white-space: nowrap;
 }
 
-.btn-copy:hover {
-  background-color: #27ae60;
+.btn-glow:hover {
+  background: #ffffff;
+  color: #0b0f19;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
 }
 
-.note {
-  display: block;
+.btn-glow.copied {
+  background: var(--accent-green) !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.4) !important;
+}
+
+.helper-text {
   font-size: 11px;
-  color: #888;
-  margin-top: 6px;
+  color: #6b7280;
+  margin-top: 8px;
 }
 </style>
 
 <script>
-// クリップボードコピー機能
-function copyToClipboard(elementId, btn) {
-  const copyText = document.getElementById(elementId);
-  copyText.select();
-  copyText.setSelectionRange(0, 99999); // スマホ対応
-  navigator.clipboard.writeText(copyText.value).then(() => {
-    const originalText = btn.innerText;
-    btn.innerText = "コピー済!";
-    btn.style.backgroundColor = "#3498db";
+function copyAddress(id, btn) {
+  const input = document.getElementById(id);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  navigator.clipboard.writeText(input.value).then(() => {
+    const textSpan = btn.querySelector('.btn-text');
+    const originalText = textSpan.innerText;
+    
+    btn.classList.add('copied');
+    textSpan.innerText = 'COPIED!';
+    
     setTimeout(() => {
-      btn.innerText = originalText;
-      btn.style.backgroundColor = "";
+      btn.classList.remove('copied');
+      textSpan.innerText = originalText;
     }, 1500);
   });
 }
