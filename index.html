@@ -1,421 +1,181 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ponkan.fun | Profile</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;900&family=Noto+Sans+JP:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  
-  <style>
-    :root {
-      --bg-dark: #0f1117;
-      --bg-card: #181b26;
-      --bg-card-hover: #222636;
-      --primary: #ff8a00;
-      --primary-light: #ffa733;
-      --primary-glow: rgba(255, 138, 0, 0.3);
-      --text-main: #f3f4f6;
-      --text-muted: #9ca3af;
-      --border-color: #272c3d;
+<!-- サーバー参加案内セクション -->
+<div class="server-join-container">
+  <h2 class="server-title">PONKAN SMP サーバー参加方法</h2>
+
+  <div class="server-grid">
+    <!-- Java版カード -->
+    <div class="server-card java-card">
+      <div class="card-badge">Java Edition (PC)</div>
+      <h3>Java版で参加</h3>
+      <p class="desc">PCから参加する方</p>
       
-      /* プラットフォームカラー */
-      --color-mc: #5b8c3a;
-      --color-roblox: #e2231a;
-      --color-discord: #5865f2;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      font-family: 'Outfit', 'Noto Sans JP', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      overflow-x: hidden;
-      padding: 50px 20px 80px;
-    }
-
-    /* 背景のオレンジグロー */
-    .glow-bg {
-      position: fixed;
-      top: -120px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, var(--primary-glow) 0%, rgba(15,17,23,0) 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 540px;
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
-    }
-
-    /* ヒーロー */
-    .hero {
-      text-align: center;
-    }
-
-    .avatar-wrapper {
-      position: relative;
-      width: 100px;
-      height: 100px;
-      margin: 0 auto 18px;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .avatar-inner {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #ff8a00, #e65100);
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 46px;
-      box-shadow: 0 10px 25px var(--primary-glow);
-      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .avatar-wrapper:hover .avatar-inner {
-      transform: scale(1.08) rotate(8deg);
-    }
-
-    .avatar-wrapper:active .avatar-inner {
-      transform: scale(0.92);
-    }
-
-    .avatar-badge {
-      position: absolute;
-      bottom: 2px;
-      right: 2px;
-      background: #10b981;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      border: 3px solid var(--bg-dark);
-    }
-
-    .hero h1 {
-      font-size: 2.2rem;
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      margin-bottom: 6px;
-    }
-
-    .hero h1 span {
-      color: var(--primary);
-    }
-
-    .tagline {
-      font-size: 1rem;
-      color: var(--text-muted);
-      margin-bottom: 14px;
-    }
-
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255, 138, 0, 0.1);
-      border: 1px solid rgba(255, 138, 0, 0.25);
-      color: var(--primary-light);
-      padding: 5px 14px;
-      border-radius: 9999px;
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      background-color: var(--primary);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.3; transform: scale(0.8); }
-    }
-
-    /* ゲームIDカード */
-    .section-title {
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .cards-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      text-decoration: none;
-      color: var(--text-main);
-      transition: all 0.2s ease;
-      cursor: pointer;
-      position: relative;
-    }
-
-    .card:hover {
-      background: var(--bg-card-hover);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    }
-
-    .card-left {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .card-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 1.3rem;
-    }
-
-    /* アイコンごとのカラー */
-    .card.mc .card-icon { background: rgba(91, 140, 58, 0.15); color: #7cb342; }
-    .card.mc:hover { border-color: rgba(124, 179, 66, 0.5); }
-
-    .card.roblox .card-icon { background: rgba(226, 35, 26, 0.15); color: #ff5252; }
-    .card.roblox:hover { border-color: rgba(255, 82, 82, 0.5); }
-
-    .card.discord .card-icon { background: rgba(88, 101, 242, 0.15); color: #7289da; }
-    .card.discord:hover { border-color: rgba(114, 137, 218, 0.5); }
-
-    .card-info .label {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 2px;
-      font-weight: 500;
-    }
-
-    .card-info .username {
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-    }
-
-    .card-action {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: color 0.2s ease;
-    }
-
-    .card:hover .card-action {
-      color: var(--primary-light);
-    }
-
-    /* コピー完了トースト */
-    .toast {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%) translateY(100px);
-      background: #10b981;
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 9999px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-      transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-      z-index: 1000;
-    }
-
-    .toast.show {
-      transform: translateX(-50%) translateY(0);
-    }
-
-    /* クリック時のパーティクル */
-    .particle {
-      position: fixed;
-      pointer-events: none;
-      font-size: 22px;
-      animation: popAndFade 0.8s forwards cubic-bezier(0.22, 1, 0.36, 1);
-      z-index: 999;
-    }
-
-    @keyframes popAndFade {
-      0% { opacity: 1; transform: translate(0, 0) scale(0.6); }
-      100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(1.3) rotate(var(--rot)); }
-    }
-
-    footer {
-      text-align: center;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 10px;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="glow-bg"></div>
-
-  <main class="container">
-    
-    <!-- ヒーロー -->
-    <header class="hero">
-      <div class="avatar-wrapper" id="avatar" title="Click me!">
-        <div class="avatar-inner">🍊</div>
-        <div class="avatar-badge" title="Online"></div>
+      <div class="ip-box">
+        <label>サーバーアドレス</label>
+        <div class="copy-input-group">
+          <input type="text" value="mc.ponkan.fun" id="java-ip" readonly>
+          <button onclick="copyToClipboard('java-ip', this)" class="btn-copy">コピー</button>
+        </div>
+        <span class="note">※ポート番号の入力は不要です</span>
       </div>
-      <h1>ponkan<span>.fun</span></h1>
-      <p class="tagline">Ponkan's Game &amp; Contact IDs</p>
-      <div class="status-pill">
-        <div class="status-dot"></div>
-        <span>Gaming / Online</span>
-      </div>
-    </header>
+    </div>
 
-    <!-- ゲーム＆アカウントID -->
-    <section>
-      <div class="section-title">
-        <i class="fa-solid fa-gamepad"></i> Game Accounts
-      </div>
-      <div class="cards-grid">
-        
-        <!-- Minecraft -->
-        <a href="https://ja.namemc.com/profile/_Ponkan.1" target="_blank" rel="noopener noreferrer" class="card mc">
-          <div class="card-left">
-            <div class="card-icon"><i class="fa-solid fa-cube"></i></div>
-            <div class="card-info">
-              <div class="label">Minecraft Java</div>
-              <div class="username">_Ponkan</div>
-            </div>
-          </div>
-          <div class="card-action">
-            <span>NameMC</span>
-            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-          </div>
-        </a>
-
-        <!-- Roblox -->
-        <a href="https://www.roblox.com/search/users?keyword=Ponkan_rblx" target="_blank" rel="noopener noreferrer" class="card roblox">
-          <div class="card-left">
-            <div class="card-icon"><i class="fa-solid fa-shapes"></i></div>
-            <div class="card-info">
-              <div class="label">Roblox</div>
-              <div class="username">Ponkan_rblx</div>
-            </div>
-          </div>
-          <div class="card-action">
-            <span>Profile</span>
-            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-          </div>
-        </a>
-
-        <!-- Discord -->
-        <div class="card discord" onclick="copyText('itzponkan', 'Discord ID コピー完了！')">
-          <div class="card-left">
-            <div class="card-icon"><i class="fa-brands fa-discord"></i></div>
-            <div class="card-info">
-              <div class="label">Discord</div>
-              <div class="username">itzponkan</div>
-            </div>
-          </div>
-          <div class="card-action">
-            <span>Copy ID</span>
-            <i class="fa-regular fa-copy"></i>
-          </div>
+    <!-- 統合版 (Bedrock / Geyser) カード -->
+    <div class="server-card bedrock-card">
+      <div class="card-badge">Bedrock Edition (Geyser)</div>
+      <h3>統合版で参加</h3>
+      <p class="desc">スマホ / iPad / Switch / PS / XBOX / Windows版</p>
+      
+      <div class="ip-box">
+        <label>サーバーアドレス</label>
+        <div class="copy-input-group">
+          <input type="text" value="bedrock.ponkan.fun" id="bedrock-ip" readonly>
+          <button onclick="copyToClipboard('bedrock-ip', this)" class="btn-copy">コピー</button>
         </div>
 
+        <label style="margin-top: 10px;">ポート番号</label>
+        <div class="copy-input-group">
+          <input type="text" value="54512" id="bedrock-port" readonly>
+          <button onclick="copyToClipboard('bedrock-port', this)" class="btn-copy">コピー</button>
+        </div>
       </div>
-    </section>
+    </div>
+  </div>
+</div>
 
-    <!-- フッター -->
-    <footer>
-      <p>© 2026 ponkan.fun</p>
-    </footer>
+<style>
+/* スタイル（デザイン） */
+.server-join-container {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  box-sizing: border-box;
+}
 
-  </main>
+.server-title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 25px;
+  color: #2c3e50;
+}
 
-  <div id="toast" class="toast">コピーしました！</div>
+.server-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
 
-  <script>
-    // コピー機能
-    function copyText(text, message) {
-      navigator.clipboard.writeText(text).then(() => {
-        const toast = document.getElementById('toast');
-        toast.textContent = message;
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2000);
-      });
-    }
+@media (max-width: 650px) {
+  .server-grid {
+    grid-template-columns: 1fr;
+  }
+}
 
-    // 🍊 クリックエフェクト
-    const avatar = document.getElementById('avatar');
-    const emojis = ['🍊', '🎮', '⚔️', '⛏️', '✨'];
+.server-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e1e8ed;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
 
-    avatar.addEventListener('click', (e) => {
-      const rect = avatar.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
+.card-badge {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: bold;
+  border-radius: 6px;
+  background: #f0f4f8;
+  color: #555;
+  margin-bottom: 8px;
+}
 
-      for (let i = 0; i < 5; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+.java-card .card-badge { background: #e8f5e9; color: #2e7d32; }
+.bedrock-card .card-badge { background: #e3f2fd; color: #1565c0; }
 
-        const tx = (Math.random() - 0.5) * 180 + 'px';
-        const ty = (Math.random() - 0.5) * 180 - 30 + 'px';
-        const rot = (Math.random() - 0.5) * 360 + 'deg';
+.server-card h3 {
+  margin: 0 0 5px 0;
+  font-size: 18px;
+  color: #333;
+}
 
-        particle.style.setProperty('--tx', tx);
-        particle.style.setProperty('--ty', ty);
-        particle.style.setProperty('--rot', rot);
-        particle.style.left = `${centerX - 10}px`;
-        particle.style.top = `${centerY - 10}px`;
+.server-card .desc {
+  font-size: 13px;
+  color: #666;
+  margin: 0 0 15px 0;
+}
 
-        document.body.appendChild(particle);
-        setTimeout(() => particle.remove(), 800);
-      }
-    });
-  </script>
-</body>
-</html>
+.ip-box {
+  margin-top: auto;
+}
+
+.ip-box label {
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+  color: #777;
+  margin-bottom: 4px;
+}
+
+.copy-input-group {
+  display: flex;
+  gap: 6px;
+}
+
+.copy-input-group input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #f9f9f9;
+  color: #333;
+  font-family: monospace;
+}
+
+.btn-copy {
+  padding: 8px 14px;
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+}
+
+.btn-copy:hover {
+  background-color: #27ae60;
+}
+
+.note {
+  display: block;
+  font-size: 11px;
+  color: #888;
+  margin-top: 6px;
+}
+</style>
+
+<script>
+// クリップボードコピー機能
+function copyToClipboard(elementId, btn) {
+  const copyText = document.getElementById(elementId);
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // スマホ対応
+  navigator.clipboard.writeText(copyText.value).then(() => {
+    const originalText = btn.innerText;
+    btn.innerText = "コピー済!";
+    btn.style.backgroundColor = "#3498db";
+    setTimeout(() => {
+      btn.innerText = originalText;
+      btn.style.backgroundColor = "";
+    }, 1500);
+  });
+}
+</script>
