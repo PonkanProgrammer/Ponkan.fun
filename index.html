@@ -3,27 +3,432 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ponkan.fun</title>
+  <title>ponkan.fun | The Digital Citrus Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
   <style>
-    body {
+    :root {
+      --bg-dark: #0f1115;
+      --bg-card: #181b22;
+      --bg-card-hover: #222733;
+      --primary: #ff8a00;
+      --primary-light: #ffa733;
+      --primary-glow: rgba(255, 138, 0, 0.35);
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --border-color: #2b303c;
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow-x: hidden;
+      padding: 40px 20px 80px;
+    }
+
+    /* 背景のグラデーションブラー */
+    .glow-bg {
+      position: fixed;
+      top: -150px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--primary-glow) 0%, rgba(15,17,21,0) 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* ヒーローセクション */
+    .hero {
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: 110px;
+      height: 110px;
+      margin: 0 auto 20px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .avatar-inner {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #ff8a00, #ff5100);
+      border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      font-family: sans-serif;
-      background: #fff8e7;
-      color: #d97706;
-      text-align: center;
+      font-size: 52px;
+      box-shadow: 0 10px 30px var(--primary-glow);
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-    p { color: #555; }
+
+    .avatar-wrapper:hover .avatar-inner {
+      transform: scale(1.08) rotate(8deg);
+    }
+
+    .avatar-wrapper:active .avatar-inner {
+      transform: scale(0.95);
+    }
+
+    .avatar-badge {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      background: #10b981;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 3px solid var(--bg-dark);
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+
+    .hero h1 span {
+      color: var(--primary);
+    }
+
+    .tagline {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 138, 0, 0.12);
+      border: 1px solid rgba(255, 138, 0, 0.3);
+      color: var(--primary-light);
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--primary);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    /* セクション */
+    .section-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title i {
+      color: var(--primary);
+    }
+
+    /* リンク・プロジェクトカード */
+    .links-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      color: var(--text-main);
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(255, 138, 0, 0.5);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .card-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.25rem;
+      color: var(--primary);
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .card:hover .card-icon {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .card-info h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .card-info p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .card-arrow {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .card:hover .card-arrow {
+      transform: translateX(4px);
+      color: var(--primary-light);
+    }
+
+    /* ソーシャルボタン */
+    .social-row {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .social-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.25rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .social-btn:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px var(--primary-glow);
+    }
+
+    /* フッター */
+    footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 20px;
+    }
+
+    footer a {
+      color: var(--primary-light);
+      text-decoration: none;
+    }
+
+    /* パーティクル（クリックエフェクト） */
+    .particle {
+      position: fixed;
+      pointer-events: none;
+      font-size: 24px;
+      animation: popAndFade 0.9s forwards cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: 999;
+    }
+
+    @keyframes popAndFade {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(0.6) rotate(0deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--tx), var(--ty)) scale(1.4) rotate(var(--rot));
+      }
+    }
   </style>
 </head>
 <body>
-  <div>
-    <h1>🍊 ponkan.fun</h1>
-    <p>Coming Soon...</p>
-  </div>
+
+  <div class="glow-bg"></div>
+
+  <main class="container">
+    
+    <!-- ヒーロー -->
+    <header class="hero">
+      <div class="avatar-wrapper" id="avatar" title="クリックしてみてね！">
+        <div class="avatar-inner">🍊</div>
+        <div class="avatar-badge" title="Online"></div>
+      </div>
+      <h1>ponkan<span>.fun</span></h1>
+      <p class="tagline">ぽんかんのWebポータル＆実験場</p>
+      <div class="status-pill">
+        <div class="status-dot"></div>
+        <span>Building something cool</span>
+      </div>
+    </header>
+
+    <!-- プロジェクト・コンテンツ -->
+    <section>
+      <div class="section-title">
+        <i class="fa-solid fa-cube"></i> Projects &amp; Apps
+      </div>
+      <div class="links-grid">
+        <a href="https://github.com/PonkanProgrammer" target="_blank" rel="noopener noreferrer" class="card">
+          <div class="card-left">
+            <div class="card-icon"><i class="fa-solid fa-code"></i></div>
+            <div class="card-info">
+              <h3>GitHub Repositories</h3>
+              <p>公開中のソースコードや個人開発プロジェクト</p>
+            </div>
+          </div>
+          <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+        </a>
+
+        <div class="card" onclick="copyDomain()">
+          <div class="card-left">
+            <div class="card-icon"><i class="fa-solid fa-share-nodes"></i></div>
+            <div class="card-info">
+              <h3 id="share-text">Share ponkan.fun</h3>
+              <p>URLをクリップボードにコピー</p>
+            </div>
+          </div>
+          <div class="card-arrow"><i class="fa-solid fa-copy"></i></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ソーシャルリンク -->
+    <section>
+      <div class="section-title" style="justify-content: center;">
+        <i class="fa-solid fa-link"></i> Connect
+      </div>
+      <div class="social-row">
+        <a href="https://github.com/PonkanProgrammer" target="_blank" rel="noopener noreferrer" class="social-btn" title="GitHub">
+          <i class="fa-brands fa-github"></i>
+        </a>
+        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-btn" title="X (Twitter)">
+          <i class="fa-brands fa-x-twitter"></i>
+        </a>
+        <a href="mailto:contact@ponkan.fun" class="social-btn" title="Email">
+          <i class="fa-solid fa-envelope"></i>
+        </a>
+      </div>
+    </section>
+
+    <!-- フッター -->
+    <footer>
+      <p>© 2026 ponkan.fun — All rights reserved.</p>
+    </footer>
+
+  </main>
+
+  <script>
+    // アイコンをクリックするとポンカンが弾けるインタラクション
+    const avatar = document.getElementById('avatar');
+    const emojis = ['🍊', '✨', '🚀', '⚡', '💻'];
+
+    avatar.addEventListener('click', (e) => {
+      const rect = avatar.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      for (let i = 0; i < 6; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+        const tx = (Math.random() - 0.5) * 200 + 'px';
+        const ty = (Math.random() - 0.5) * 200 - 40 + 'px';
+        const rot = (Math.random() - 0.5) * 360 + 'deg';
+
+        particle.style.setProperty('--tx', tx);
+        particle.style.setProperty('--ty', ty);
+        particle.style.setProperty('--rot', rot);
+        particle.style.left = `${centerX - 12}px`;
+        particle.style.top = `${centerY - 12}px`;
+
+        document.body.appendChild(particle);
+
+        setTimeout(() => particle.remove(), 900);
+      }
+    });
+
+    // URLコピー機能
+    function copyDomain() {
+      navigator.clipboard.writeText('https://ponkan.fun').then(() => {
+        const shareText = document.getElementById('share-text');
+        const originalText = shareText.textContent;
+        shareText.textContent = 'Copied to Clipboard! 🎉';
+        shareText.style.color = '#10b981';
+        setTimeout(() => {
+          shareText.textContent = originalText;
+          shareText.style.color = '';
+        }, 2000);
+      });
+    }
+  </script>
 </body>
 </html>
