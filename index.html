@@ -58,6 +58,7 @@ a{color:inherit}
 .id span{font-family:var(--display);font-size:clamp(1.8rem,7.5vw,5rem);line-height:1.2;overflow-wrap:anywhere;text-align:right}
 
 footer{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:28px clamp(20px,5vw,64px);background:var(--pith);color:var(--leaf);font-size:.9rem;border-top:3px solid var(--leaf)}
+.quietnav{display:flex;gap:18px}
 .quiet{font-size:.7rem;text-decoration:none;opacity:.25;transition:opacity .3s}
 .quiet:hover,.quiet:focus-visible{opacity:.9}
 
@@ -118,7 +119,7 @@ footer{display:flex;justify-content:space-between;align-items:center;gap:16px;pa
   </section>
 </main>
 
-<footer><span>&copy; <span id="y">2026</span> ponkan.fun</span><a class="quiet" href="https://proxy.ponkan.fun">proxy</a></footer>
+<footer><span>&copy; <span id="y">2026</span> ponkan.fun</span><nav class="quietnav" aria-label="サブドメイン"><a class="quiet" href="https://proxy.ponkan.fun">proxy</a><a class="quiet" href="https://yt.ponkan.fun">yt</a></nav></footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
