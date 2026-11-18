@@ -14,7 +14,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍊</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Inter:wght@200;300;400;600;800&family=Pacifico&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
 <script>(function(){var t;try{t=localStorage.getItem("theme")}catch(e){}if(t!=="dark"&&t!=="light")t="dark";document.documentElement.dataset.theme=t;document.documentElement.classList.add("js");if(matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("go","skipintro")})();</script>
 <style>
 :root{
@@ -33,8 +33,8 @@
   --band-bg:#FF8A00; --band-ink:#090714; --toast-ink:#090714;
 }
 *{box-sizing:border-box;margin:0}
-html{scroll-behavior:smooth;overflow-x:hidden}
-body{font-family:var(--body);font-weight:500;background:var(--bg);color:var(--ink);line-height:1.7;overflow-x:hidden;transition:background .5s,color .5s}
+html{scroll-behavior:smooth;overflow-x:hidden;overflow-x:clip}
+body{font-family:var(--body);font-weight:500;background:var(--bg);color:var(--ink);line-height:1.7;overflow-x:hidden;overflow-x:clip;transition:background .5s,color .5s}
 body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(60% 50% at 85% 8%,var(--neb1),transparent 70%),radial-gradient(55% 55% at 8% 92%,var(--neb2),transparent 70%)}
 #stars{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 a{color:inherit}
@@ -227,6 +227,150 @@ footer{display:flex;justify-content:space-between;align-items:center;gap:16px;fl
 .toast.show{opacity:1;transform:translate(-50%,0)}
 .spark{position:fixed;pointer-events:none;z-index:9;color:var(--peel);font-size:14px;line-height:1}
 
+/* ---- VI invasion ---- */
+#vice{position:fixed;inset:0;width:100%;height:100%;z-index:6;pointer-events:none;mix-blend-mode:screen;opacity:0}
+/* VOID */
+.void{position:relative;z-index:1;height:320vh;background:#000;color:#fff}
+.void .v-in{position:sticky;top:0;height:100vh;display:grid;place-items:center;overflow:hidden}
+.void .v-line{grid-area:1/1;margin:0;font-family:"Zen Maru Gothic",Inter,sans-serif;font-weight:500;font-size:clamp(1rem,3.4vw,1.6rem);letter-spacing:.3em;text-indent:.3em;
+  opacity:0;filter:blur(8px);transform:translateY(14px);transition:opacity 1s,filter 1s,transform 1s}
+.void .v-line.on{opacity:1;filter:none;transform:none}
+.void .v-line[data-k="0"].on{opacity:.22}
+.void .v-line[data-k="2"]{color:#ff3fa4;text-shadow:0 0 18px rgba(255,63,164,.6)}
+.void .v-arrow{font-family:Inter,sans-serif;font-weight:200;font-size:clamp(2rem,6vw,3rem);color:#ff3fa4;text-shadow:0 0 20px #ff3fa4}
+.void .v-arrow.on{animation:fall 1.4s ease-in-out infinite}
+@keyframes fall{50%{transform:translateY(12px)}}
+.void .v-depth{position:absolute;right:clamp(14px,3vw,30px);top:20vh;bottom:20vh;width:1px;background:rgba(255,255,255,.12)}
+.void .v-depth i{position:absolute;left:-2px;top:0;width:5px;height:0;border-radius:3px;background:linear-gradient(#fff3,#ff3fa4)}
+.void .v-word{font-family:Inter,sans-serif;font-weight:200;font-size:clamp(.8rem,2vw,1rem);letter-spacing:1.2em;text-indent:1.2em;opacity:.18}
+.void .v-word::after{content:"_";animation:blip 1s steps(1) infinite}
+/* GTA VI section */
+#vi{--pink:#ff3fa4;--gold:#ffd166;--teal:#2de2e6;position:relative;z-index:7;min-height:100svh;overflow:hidden;background:#120623;color:#fff;font-family:Inter,sans-serif;
+  display:flex;flex-direction:column;align-items:center;text-align:center;padding:10vh 16px 16vh}
+#vi .v-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+#vi .v-tint{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(40,20,120,.35),rgba(150,40,160,.25) 45%,rgba(255,80,160,.22) 70%,rgba(240,150,70,.35));mix-blend-mode:hard-light}
+#vi .v-vig{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse at center,transparent 40%,rgba(18,6,35,.8) 100%),linear-gradient(180deg,#000 0,transparent 18vh)}
+#vi>*:not(.v-bg):not(.v-tint):not(.v-vig){position:relative;z-index:2}
+#vi .v-logo{width:min(78vw,460px);height:auto;filter:drop-shadow(0 10px 30px rgba(255,63,164,.55));opacity:0;transform:scale(.7) translateY(-30px);transition:opacity .8s,transform 1.2s cubic-bezier(.2,1.4,.4,1);animation:logofloat 6s 1.5s ease-in-out infinite}
+@keyframes logofloat{50%{translate:0 -8px}}
+#vi .rv{opacity:0;transform:translateY(26px);transition:opacity .9s,transform 1s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--d)*.12s + .2s)}
+#vi.on .rv{opacity:1;transform:none}
+#vi .v-kick.rv{transform:translateY(26px) rotate(-4deg)}
+#vi.on .v-kick.rv{transform:rotate(-4deg)}
+#vi .v-fx{position:absolute;inset:0;width:100%;height:100%;z-index:3!important;pointer-events:none}
+#vi .v-back{margin-top:7vh;font-size:12px;letter-spacing:.25em;text-decoration:none;color:rgba(255,255,255,.6);padding:10px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.18);transition:color .2s,border-color .2s}
+#vi .v-back:hover{color:#fff;border-color:#ff3fa4}
+#vi .v-done{background:linear-gradient(90deg,#6a5cff,#ff3fa4,#ffd166,#ff3fa4,#6a5cff);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:viflow2 3s linear infinite}
+@keyframes viflow2{to{background-position:300% 0}}
+#vi .last10 .v-roll{animation:beat 1s ease-in-out infinite}
+@keyframes beat{0%{transform:scale(1.12);color:#ff3fa4}60%{transform:none}}
+#vi.on .v-logo{opacity:1;transform:none}
+#vi .v-kick{font-family:Pacifico,cursive;font-size:clamp(20px,4vw,32px);color:var(--gold);text-shadow:0 0 18px rgba(255,90,160,.8);transform:rotate(-4deg);margin-top:8px}
+#vi .v-date{margin-top:8px;font-weight:800;letter-spacing:.25em;font-size:clamp(11px,2.4vw,15px);color:#ffe9f5}
+#vi .v-count{display:flex;margin-top:6vh;align-items:flex-start}
+#vi .v-unit{padding:0 clamp(10px,3.5vw,36px)}
+#vi .v-sep{width:1px;align-self:stretch;margin:.6em 0 1.4em;background:linear-gradient(180deg,transparent,rgba(255,255,255,.45),transparent)}
+#vi .v-roll{position:relative;overflow:hidden;font-weight:200;font-size:clamp(40px,11vw,112px);line-height:1.1;height:1.1em;font-variant-numeric:tabular-nums;letter-spacing:-.03em;text-shadow:0 2px 24px rgba(0,0,0,.35)}
+#vi .v-roll span{display:block}
+#vi .v-roll{transition:color .3s}
+#vi .v-roll span.out{position:absolute;inset:0;animation:rollout .45s cubic-bezier(.6,0,.3,1) forwards}
+#vi .v-roll span.in{animation:rollin .45s cubic-bezier(.6,0,.3,1)}
+@keyframes rollout{to{transform:translateY(-60%);opacity:0;filter:blur(4px)}}
+@keyframes rollin{from{transform:translateY(60%);opacity:0;filter:blur(4px)}}
+#vi .v-lbl{margin-top:4px;font-size:10px;letter-spacing:.35em;color:rgba(255,255,255,.7)}
+#vi .final .v-roll{color:var(--gold)}
+#vi .v-done{display:none;font-weight:800;font-size:clamp(48px,12vw,120px);margin-top:5vh;color:var(--gold);text-shadow:0 0 30px var(--pink)}
+#vi .v-clock{margin-top:5vh;display:flex;flex-direction:column;align-items:center}
+#vi .v-clock::before{content:"NOW";font-size:10px;letter-spacing:.4em;color:var(--teal);margin-bottom:4px}
+#vi .v-time{font-weight:300;font-size:clamp(22px,5vw,34px);letter-spacing:.08em;font-variant-numeric:tabular-nums}
+#vi .v-zone{font-size:11px;letter-spacing:.2em;color:rgba(255,255,255,.65);margin-top:4px}
+#vi .v-oldselect{margin-top:10px;font:400 12px Inter,sans-serif;letter-spacing:.1em;color:#fff;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:6px 14px;outline:none}
+#vi .v-tzbtn{all:unset;box-sizing:border-box;cursor:pointer;margin-top:12px;display:inline-flex;align-items:center;gap:8px;max-width:92vw;
+  padding:9px 14px 9px 18px;border-radius:999px;font:400 13px Inter,sans-serif;letter-spacing:.06em;color:#fff;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:border-color .2s,background .2s}
+#vi .v-tzbtn:hover,#vi .v-tzbtn:focus-visible{border-color:#ff3fa4;background:rgba(255,63,164,.12)}
+#vi .v-tzbtn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#vi .v-tzbtn svg{width:16px;height:16px;flex:none;opacity:.7}
+.v-tzm{position:fixed;inset:0;z-index:30;display:grid;place-items:center;font-family:Inter,"Zen Maru Gothic",sans-serif;color:#fff}
+.v-tzm[hidden]{display:none}
+.v-tzm-bg{position:absolute;inset:0;background:rgba(8,2,18,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:tzfade .25s}
+.v-tzm-panel{position:relative;width:min(520px,94vw);height:min(640px,82vh);display:flex;flex-direction:column;border-radius:22px;overflow:hidden;
+  background:linear-gradient(180deg,rgba(40,14,70,.92),rgba(18,6,35,.96));border:1px solid rgba(255,63,164,.35);box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 60px -20px #ff3fa4;animation:tzup .35s cubic-bezier(.2,.9,.3,1)}
+@keyframes tzfade{from{opacity:0}}
+@keyframes tzup{from{opacity:0;transform:translateY(30px) scale(.97)}}
+.v-tzm-head{display:flex;justify-content:space-between;align-items:center;padding:18px 20px 8px}
+.v-tzm-head b{font-size:13px;letter-spacing:.35em;font-weight:800;color:#2de2e6}
+.v-tzm-x{all:unset;cursor:pointer;width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:rgba(255,255,255,.08)}
+.v-tzm-x:hover{background:rgba(255,63,164,.3)}
+.v-tzm-search{margin:6px 16px 10px;display:flex;align-items:center;gap:10px;padding:0 14px;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15)}
+.v-tzm-search:focus-within{border-color:#ff3fa4}
+.v-tzm-search svg{width:18px;height:18px;opacity:.6;flex:none}
+.v-tzm-search input{all:unset;flex:1;padding:12px 0;font-size:15px;color:#fff}
+.v-tzm-search input::placeholder{color:rgba(255,255,255,.45)}
+.v-tzm-chips{display:flex;gap:8px;overflow-x:auto;padding:0 16px 12px;scrollbar-width:none}
+.v-tzm-chips::-webkit-scrollbar{display:none}
+.v-tzm-chips button{all:unset;cursor:pointer;flex:none;padding:6px 12px;border-radius:999px;font-size:12px;letter-spacing:.06em;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15)}
+.v-tzm-chips button:hover,.v-tzm-chips button.on{background:linear-gradient(90deg,#6a5cff,#ff3fa4);border-color:transparent}
+.v-tzm-list{flex:1;overflow-y:auto;padding:0 8px 16px;overscroll-behavior:contain}
+.v-tzm-list h3{position:sticky;top:0;z-index:1;margin:0;padding:10px 12px 6px;font-size:10px;letter-spacing:.35em;font-weight:800;color:#ff3fa4;background:rgba(24,8,44,.96)}
+.v-tzm-list button{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:center;padding:10px 12px;border-radius:12px}
+.v-tzm-list button:hover,.v-tzm-list button:focus-visible{background:rgba(255,255,255,.07)}
+.v-tzm-list button.cur{background:rgba(255,63,164,.18);box-shadow:inset 3px 0 0 #ff3fa4}
+.v-tzm-list .c{font-size:14px;font-weight:600}
+.v-tzm-list .n{grid-column:1;font-size:11px;color:rgba(255,255,255,.55);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.v-tzm-list .t{grid-row:1/3;grid-column:2;text-align:right;font-variant-numeric:tabular-nums}
+.v-tzm-list .t b{display:block;font-size:15px;font-weight:300;letter-spacing:.05em}
+.v-tzm-list .t small{font-size:10px;letter-spacing:.1em;color:#2de2e6}
+.v-tzm-empty{padding:40px 12px;text-align:center;color:rgba(255,255,255,.5);font-size:13px}
+#vi .v-note{margin-top:10px;font-size:11px;color:rgba(255,255,255,.7)}
+#vi .v-news{margin-top:6vh;width:min(560px,100%);text-align:left}
+#vi .v-news h2{font-weight:800;font-size:13px;letter-spacing:.4em;color:var(--teal);margin-bottom:10px}
+#vi .v-news a{display:block;text-decoration:none;padding:14px 16px;border-radius:14px;margin-bottom:10px;background:rgba(18,6,35,.55);border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform .2s,border-color .2s}
+#vi .v-news a:hover{transform:translateY(-2px);border-color:var(--pink)}
+#vi .v-news time{font-size:12px;font-weight:800;color:var(--pink);letter-spacing:.1em}
+#vi .v-news b{display:block;margin:4px 0 2px;font-size:15px}
+#vi .v-news small{font-size:11px;color:rgba(255,255,255,.65)}
+.v-player{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:25;display:flex;align-items:center;gap:12px;padding:8px 14px 8px 8px;border-radius:999px;
+  background:rgba(18,6,35,.72);color:#fff;border:1px solid rgba(255,63,164,.45);box-shadow:0 12px 40px rgba(0,0,0,.4);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);
+  font-family:Inter,sans-serif;opacity:0;transform:translateY(24px) scale(.96);pointer-events:none;transition:opacity .4s,transform .5s cubic-bezier(.2,1.2,.4,1)}
+.v-player.show{opacity:1;transform:none;pointer-events:auto}
+.v-player .v-pp{all:unset;cursor:pointer;flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#ff3fa4,#ff8a3d);box-shadow:0 0 18px rgba(255,63,164,.65);transition:transform .2s}
+.v-player .v-pp:hover{transform:scale(1.06)}.v-player .v-pp:active{transform:scale(.94)}
+.v-player .v-pp svg{width:20px;height:20px;fill:#fff}
+.v-player .i-pause{display:none}.v-player.playing .i-pause{display:block}.v-player.playing .i-play{display:none}
+.v-player.ask .v-pp{animation:askp 1.4s ease-in-out infinite}
+@keyframes askp{50%{box-shadow:0 0 0 10px rgba(255,63,164,0),0 0 28px rgba(255,63,164,.9)}}
+.v-player .tr{min-width:0;font-size:11px;line-height:1.35;color:rgba(255,255,255,.65)}
+.v-player .tr b{display:block;font-size:13px;color:#fff;white-space:nowrap}
+.v-player .v-prog{display:block;margin-top:5px;width:96px;height:2px;border-radius:2px;background:rgba(255,255,255,.15);overflow:hidden}
+.v-player .v-prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,#2de2e6,#ff3fa4)}
+.v-player .v-vol{display:flex;align-items:center;gap:6px}
+.v-player .v-mute{all:unset;cursor:pointer;width:30px;height:30px;display:grid;place-items:center;border-radius:50%;color:#fff;opacity:.85}
+.v-player .v-mute:hover{background:rgba(255,255,255,.1);opacity:1}
+.v-player .v-mute svg{width:20px;height:20px}
+.v-player .v-mute .x{display:none}
+.v-player[data-lv="0"] .w1,.v-player[data-lv="0"] .w2{display:none}.v-player[data-lv="0"] .x{display:block}
+.v-player[data-lv="1"] .w2{display:none}
+.v-range{-webkit-appearance:none;appearance:none;width:84px;height:22px;background:transparent;cursor:pointer;--p:80%}
+.v-range::-webkit-slider-runnable-track{height:4px;border-radius:4px;background:linear-gradient(90deg,#2de2e6,#ff3fa4 var(--p),rgba(255,255,255,.18) var(--p))}
+.v-range::-moz-range-track{height:4px;border-radius:4px;background:linear-gradient(90deg,#2de2e6,#ff3fa4 var(--p),rgba(255,255,255,.18) var(--p))}
+.v-range::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;margin-top:-5px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px rgba(255,63,164,.45),0 0 12px #ff3fa4;transition:transform .15s}
+.v-range::-moz-range-thumb{width:14px;height:14px;border:0;border-radius:50%;background:#fff;box-shadow:0 0 0 3px rgba(255,63,164,.45),0 0 12px #ff3fa4}
+.v-range:active::-webkit-slider-thumb{transform:scale(1.25)}
+.v-range:focus-visible{outline:2px solid #ff3fa4;outline-offset:2px;border-radius:4px}
+.v-player.novol .v-range{display:none}
+@media (max-width:420px){.v-player{left:12px;right:12px;justify-content:space-between}.v-player .v-prog{width:100%}.v-range{width:72px}}
+.band .vi{color:#ff3fa4;font-style:normal}
+:root[data-theme="dark"] .band .vi{color:#3a0f5c}
+.glitch{animation:glitch .42s steps(2) both}
+@keyframes glitch{
+  0%{text-shadow:4px 0 #ff3fa4,-4px 0 #2de2e6;transform:translate(0)}
+  20%{text-shadow:-6px 0 #ff3fa4,6px 0 #2de2e6;transform:translate(-3px,1px) skewX(-4deg)}
+  40%{text-shadow:3px 2px #ff3fa4,-3px -2px #2de2e6;clip-path:inset(10% 0 40% 0)}
+  60%{text-shadow:-2px 0 #ff3fa4,2px 0 #2de2e6;clip-path:inset(55% 0 5% 0);transform:translate(4px,0)}
+  80%{text-shadow:5px 0 #ff3fa4,-5px 0 #2de2e6;clip-path:none;transform:skewX(3deg)}
+  100%{text-shadow:none;transform:none}}
+.lead.viced{color:#ff3fa4;text-shadow:0 0 12px rgba(255,63,164,.6)}
 @media (max-width:640px){
   .fruit-wrap{right:-10vw;top:9vh;width:70vw}
   .orbit{inset:-5%}
@@ -270,6 +414,7 @@ footer{display:flex;justify-content:space-between;align-items:center;gap:16px;fl
   <button class="skip" id="skip" type="button">SKIP</button>
 </div>
 <canvas id="stars" aria-hidden="true"></canvas>
+<canvas id="vice" aria-hidden="true"></canvas>
 <div class="prog" id="prog" aria-hidden="true"></div>
 
 <button class="theme" id="theme" type="button" aria-label="ダークモードの切り替え"><svg viewBox="0 0 24 24" aria-hidden="true"><mask id="mm"><rect x="-8" y="-8" width="40" height="40" fill="#fff"/><circle class="cut" cx="12" cy="12" r="6.5" fill="#000"/></mask><circle cx="12" cy="12" r="6" fill="currentColor" mask="url(#mm)"/><g class="rays" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1.5v2.5M12 20v2.5M1.5 12H4M20 12h2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></g></svg></button>
@@ -297,12 +442,12 @@ footer{display:flex;justify-content:space-between;align-items:center;gap:16px;fl
   </div>
 
   <h1 aria-label="ponkan"><span style="--i:0" aria-hidden="true">p</span><span style="--i:1" aria-hidden="true">o</span><span style="--i:2" aria-hidden="true">n</span><span style="--i:3" aria-hidden="true">k</span><span style="--i:4" aria-hidden="true">a</span><span style="--i:5" aria-hidden="true">n</span></h1>
-  <p class="lead">ぽんかん星へようこそ。下にIDがあります。</p>
+  <p class="lead" id="lead">ぽんかん星へようこそ。下にIDがあります。</p>
 
   <a class="hint" id="hint" href="#ids" aria-label="下へスクロール"><span>SCROLL</span><i class="line"><b></b></i></a>
 </header>
 
-<div class="band" aria-hidden="true"><div class="band-in" id="bandIn"><span class="band-seq">https://ponkan.fun<em>✦</em>www<em>✦</em>ぽんかん<em>✦</em>ONLINE<em>✦</em>GAME<em>✦</em></span></div></div>
+<div class="band" aria-hidden="true"><div class="band-in" id="bandIn"><span class="band-seq">https://ponkan.fun<em>✦</em><b class="vi">GTA VI</b><em>✦</em>ぽんかん<em>✦</em><b class="vi">2026.11.19</b><em>✦</em>ONLINE<em>✦</em><b class="vi">LEONIDA</b><em>✦</em></span></div></div>
 
 <div class="net" id="net"><canvas id="netcv" aria-hidden="true"></canvas>
 <main>
@@ -325,6 +470,57 @@ footer{display:flex;justify-content:space-between;align-items:center;gap:16px;fl
   <a class="top" href="#" aria-label="ページの先頭へ戻る"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2c3 2.5 4.5 6 4.5 10v3.500l2.500 3.500h-4l-1.500 3h-3L9 19H5l2.500-3.500V12C7.500 8 9 4.500 12 2zm0 5a1.800 1.800 0 1 0 0 3.600A1.800 1.800 0 0 0 12 7z" fill-rule="evenodd"/></svg>TOP</a>
   <nav class="quietnav" aria-label="サブドメイン"><a class="quiet" rel="nofollow noopener noreferrer" href="https://proxy.ponkan.fun">proxy</a><a class="quiet" rel="nofollow noopener noreferrer" href="https://yt.ponkan.fun">yt</a></nav>
 </footer>
+</div>
+
+<section class="void" id="void" aria-label="VOID"><div class="v-in">
+  <p class="v-line" data-k="0"><span class="v-word">VOID</span></p>
+  <p class="v-line" data-k="1">ここには、何もない。</p>
+  <p class="v-line" data-k="2">…はずだった。</p>
+  <p class="v-line v-arrow" data-k="3">↓</p>
+  <div class="v-depth" aria-hidden="true"><i id="vdepth"></i></div>
+</div></section>
+
+<section id="vi" aria-label="GTA VI カウントダウン">
+  <video class="v-bg" id="vbg" src="bg.mp4" poster="poster.webp" muted loop playsinline preload="none"></video>
+  <canvas class="v-fx" id="vfx" aria-hidden="true"></canvas>
+  <div class="v-tint"></div><div class="v-vig"></div>
+  <img class="v-logo" src="logo.webp" alt="Grand Theft Auto VI">
+  <div style="--d:1" class="rv v-kick">Welcome to Leonida</div>
+  <div style="--d:2" class="rv v-date">2026.11.19 — PS5 / XBOX SERIES X|S</div>
+  <div style="--d:3" class="rv v-count" id="vcount">
+    <div class="v-unit"><div class="v-roll" id="vd"><span>--</span></div><div class="v-lbl">DAYS</div></div><div class="v-sep"></div>
+    <div class="v-unit"><div class="v-roll" id="vh"><span>--</span></div><div class="v-lbl">HOURS</div></div><div class="v-sep"></div>
+    <div class="v-unit"><div class="v-roll" id="vm"><span>--</span></div><div class="v-lbl">MIN</div></div><div class="v-sep"></div>
+    <div class="v-unit"><div class="v-roll" id="vs"><span>--</span></div><div class="v-lbl">SEC</div></div>
+  </div>
+  <div class="v-done" id="vdone">OUT NOW</div>
+  <div style="--d:4" class="rv v-clock"><div class="v-time" id="vtime">--:--:--</div><div class="v-zone" id="vzone">—</div><button class="v-tzbtn" id="vtzbtn" type="button" aria-haspopup="dialog"><span id="vtzlabel">—</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div>
+  <p style="--d:5" class="rv v-note">選んだ地域の 11/19 0:00 までをカウント（実際の解禁時刻は機種・ストアで変わることがあります）<br>非公式ファンページです。Rockstar Gamesとは関係ありません。</p>
+  <section style="--d:6" class="rv v-news">
+    <h2>LATEST NEWS</h2>
+    <a href="https://www.gtaboom.com/datamined-information-says-your-discord-is-getting-a-full-gta-6-makeover-for-launch-955a" target="_blank" rel="noopener"><time>2026.11.17</time><b>DiscordにGTA VIコラボのVice Cityテーマが登場</b><small>アプリアイコン・テーマ・表示名フォントが発売2日前から配布 ／ GTABOOM</small></a>
+    <a href="https://www.ggrecon.com/articles/gta-6-update-1-002-before-launch/" target="_blank" rel="noopener"><time>2026.11.14</time><b>発売前なのにアップデート1.002（約1GB）が配信</b><small>PS5で必須アップデート。パッチノートはまだ未公開 ／ GGRecon</small></a>
+  </section>
+  <a class="v-back rv" style="--d:7" href="#">↑ ponkan.fun に戻る</a>
+</section>
+<div class="v-tzm" id="vtzm" role="dialog" aria-modal="true" aria-label="タイムゾーンを選ぶ" hidden>
+  <div class="v-tzm-bg" data-close></div>
+  <div class="v-tzm-panel">
+    <div class="v-tzm-head">
+      <b>タイムゾーン</b><button type="button" class="v-tzm-x" data-close aria-label="閉じる">✕</button>
+    </div>
+    <div class="v-tzm-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><input id="vtzq" type="search" placeholder="都市・国・UTC+9・JST で検索" autocomplete="off"></div>
+    <div class="v-tzm-chips" id="vtzchips"></div>
+    <div class="v-tzm-list" id="vtzlist"></div>
+  </div>
+</div>
+<div class="v-player" id="vplayer" role="region" aria-label="音楽プレーヤー">
+  <button class="v-pp" id="vplay" type="button" aria-label="再生"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5.5v13l11-6.5z"/><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg></button>
+  <div class="tr"><b>Midnight City</b><span>M83</span><i class="v-prog"><i id="vprog"></i></i></div>
+  <div class="v-vol" id="vvolwrap">
+    <button class="v-mute" id="vmute" type="button" aria-label="ミュート"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path class="w1" d="M15 9.5a3.5 3.5 0 0 1 0 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path class="w2" d="M17.5 7a7 7 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path class="x" d="M16 9.5l5 5M21 9.5l-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    <input class="v-range" id="vvol" type="range" min="0" max="100" value="80" aria-label="音量">
+  </div>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -684,6 +880,254 @@ footer{display:flex;justify-content:space-between;align-items:center;gap:16px;fl
     },{threshold:.25});
     items.forEach(function(li){ io.observe(li); });
   } else { items.forEach(function(li){ li.classList.add('in'); }); }
+
+  /* ---- VI leaking into the VOID (scroll driven) ---- */
+  (function(){
+    var vc = document.getElementById('vice'), g = vc.getContext('2d'), sec = document.getElementById('vi'), VW=0, VH=0;
+    var seeds = [{fx:.08,m:.5,ph:0},{fx:.35,m:.36,ph:2},{fx:.62,m:.46,ph:4},{fx:.92,m:.4,ph:1}];
+    function vsize(){ var d = Math.min(devicePixelRatio||1,1.5); VW = innerWidth; VH = innerHeight; vc.width = VW*d; vc.height = VH*d; g.setTransform(d,0,0,d,0,0); }
+    function vdraw(t){
+      g.clearRect(0,0,VW,VH);
+      var top = sec.getBoundingClientRect().top;
+      if(top > VH*1.7 || top < -VH*.2){ vc.style.opacity = 0; return; }
+      var p = Math.max(0, Math.min(1, 1 - (top - VH*.15)/(VH*1.5)));
+      vc.style.opacity = top < VH*.15 ? Math.max(0, (top + VH*.2)/(VH*.35)) : 1;
+      var diag = Math.hypot(VW,VH);
+      var grad = g.createLinearGradient(0,top-diag*.5,0,top);
+      grad.addColorStop(0,'rgba(70,40,220,.0)'); grad.addColorStop(.45,'rgba(110,40,220,.55)'); grad.addColorStop(.8,'rgba(255,63,164,.65)'); grad.addColorStop(1,'rgba(255,150,70,.75)');
+      seeds.forEach(function(s){
+        var R = s.m*diag*Math.pow(p,1.3), cx = s.fx*VW, cy = top + R*.25, N = 96;
+        if(R < 2) return;
+        g.beginPath();
+        for(var i=0;i<=N;i++){
+          var a = i/N*6.2832, r = R*(1 + .16*Math.sin(3*a + t*.0005 + s.ph) + .09*Math.sin(7*a - t*.0008 + s.ph) + .05*Math.sin(15*a + t*.0013));
+          var x = cx + Math.cos(a)*r, y = cy + Math.sin(a)*r; i ? g.lineTo(x,y) : g.moveTo(x,y);
+        }
+        g.closePath(); g.fillStyle = grad; g.fill();
+        g.save(); g.shadowColor = '#ff3fa4'; g.shadowBlur = 18; g.strokeStyle = 'rgba(255,90,180,.85)'; g.lineWidth = 2; g.stroke(); g.restore();
+      });
+    }
+    vsize(); addEventListener('resize', vsize);
+    if(reduce){ addEventListener('scroll', function(){ vdraw(0); }, {passive:true}); vdraw(0); return; }
+    (function frame(t){ vdraw(t); requestAnimationFrame(frame); })(0);
+  })();
+
+  /* ---- glitches ---- */
+  if(!reduce){
+    var h1 = document.querySelector('.hero h1'), lead = document.getElementById('lead'), leadTxt = lead.textContent;
+    setInterval(function(){
+      if(!doc.classList.contains('go')) return;
+      h1.classList.remove('glitch'); void h1.offsetWidth; h1.classList.add('glitch');
+      if(Math.random() < .5){
+        lead.classList.add('glitch','viced'); lead.textContent = 'レオニダへようこそ。もうすぐ。';
+        setTimeout(function(){ lead.classList.remove('glitch','viced'); lead.textContent = leadTxt; }, 1400);
+      }
+    }, 4200);
+  }
+
+  /* ---- GTA VI section ---- */
+  (function(){
+    var sec = document.getElementById('vi'), v = document.getElementById('vbg'), pl = document.getElementById('vplayer'), btn = document.getElementById('vplay');
+    var $ = function(id){ return document.getElementById(id); };
+    // ---- time zones: all IANA zones + UTC/GMT offsets ----
+    var curTz = 'Asia/Tokyo';
+    try{ curTz = Intl.DateTimeFormat().resolvedOptions().timeZone || curTz; }catch(e){}
+    try{ var saved = localStorage.getItem('vi-tz'); if(saved){ new Intl.DateTimeFormat('en',{timeZone:saved}); curTz = saved; } }catch(e){}
+    function offMin(tz, at){
+      var p = {}; new Intl.DateTimeFormat('en-US',{timeZone:tz,hourCycle:'h23',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'}).formatToParts(at).forEach(function(x){ p[x.type]=x.value; });
+      return Math.round((Date.UTC(+p.year,+p.month-1,+p.day,+p.hour,+p.minute,+p.second) - Math.floor(at/1000)*1000)/60000);
+    }
+    function offStr(m){ var sg = m<0?'−':'+', a = Math.abs(m), h = Math.floor(a/60), mm = a%60; return 'UTC'+sg+h+(mm?':'+String(mm).padStart(2,'0'):''); }
+    function abbr(tz){ try{ return new Intl.DateTimeFormat('en-US',{timeZone:tz,timeZoneName:'short'}).formatToParts(new Date()).filter(function(p){ return p.type==='timeZoneName'; })[0].value; }catch(e){ return ''; } }
+    function longJa(tz){ try{ return new Intl.DateTimeFormat('ja-JP',{timeZone:tz,timeZoneName:'long'}).formatToParts(new Date()).filter(function(p){ return p.type==='timeZoneName'; })[0].value; }catch(e){ return ''; } }
+    var REG = {Asia:'アジア',Europe:'ヨーロッパ',America:'アメリカ',Africa:'アフリカ',Australia:'オーストラリア',Pacific:'太平洋・オセアニア',Atlantic:'大西洋',Indian:'インド洋',Antarctica:'南極',Arctic:'北極'};
+    var ORDER = ['よく使う','UTC / GMT','アジア','オーストラリア','太平洋・オセアニア','ヨーロッパ','アフリカ','アメリカ','大西洋','インド洋','南極','北極','その他'];
+    var FAV = ['Asia/Tokyo','UTC','Europe/London','America/New_York','America/Los_Angeles','Asia/Seoul','Asia/Shanghai','Australia/Sydney','Pacific/Auckland','Europe/Paris','Pacific/Honolulu','Asia/Kolkata'];
+    var all = null;
+    function build(){
+      if(all) return all;
+      var ids = [];
+      try{ ids = Intl.supportedValuesOf('timeZone'); }catch(e){}
+      if(!ids.length) ids = FAV.slice(1);
+      var etc = ['UTC','GMT']; for(var h=-12; h<=14; h++){ if(h) etc.push('Etc/GMT'+(h>0?'-':'+')+Math.abs(h)); } // Etc signs are inverted
+      if(ids.indexOf(curTz)<0) ids.push(curTz);
+      var now = new Date(); all = [];
+      function add(tz, group){
+        var o; try{ o = offMin(tz, now); }catch(e){ return; }
+        var city, name;
+        if(tz==='UTC'){ city='UTC'; name='協定世界時'; }
+        else if(tz==='GMT'){ city='GMT'; name='グリニッジ標準時'; }
+        else if(tz.indexOf('Etc/')===0){ city=offStr(o); name='固定オフセット'; }
+        else { var parts = tz.split('/'); city = parts[parts.length-1].replace(/_/g,' '); name = longJa(tz); }
+        var ab = abbr(tz);
+        all.push({tz:tz, g:group, o:o, city:city, name:name, ab:ab, key:(tz+' '+city+' '+name+' '+ab+' '+offStr(o)+' '+offStr(o).replace('UTC','GMT')).toLowerCase().replace(/−/g,'-')});
+      }
+      FAV.forEach(function(tz){ add(tz,'よく使う'); });
+      etc.forEach(function(tz){ add(tz,'UTC / GMT'); });
+      ids.forEach(function(tz){ if(tz==='UTC') return; add(tz, REG[tz.split('/')[0]] || 'その他'); });
+      all.sort(function(a,b){ var ga = ORDER.indexOf(a.g), gb = ORDER.indexOf(b.g); if(ga!==gb) return ga-gb; if(a.g==='よく使う') return FAV.indexOf(a.tz)-FAV.indexOf(b.tz); return a.o-b.o || a.city.localeCompare(b.city); });
+      return all;
+    }
+    var modal = $('vtzm'), list = $('vtzlist'), q = $('vtzq'), chips = $('vtzchips'), tzbtn = $('vtzbtn');
+    var CHIPS = [['この端末',null],['UTC','UTC'],['GMT','GMT'],['JST','Asia/Tokyo'],['PST','America/Los_Angeles'],['EST','America/New_York'],['CET','Europe/Paris'],['AEDT','Australia/Sydney']];
+    var deviceTz = 'Asia/Tokyo'; try{ deviceTz = Intl.DateTimeFormat().resolvedOptions().timeZone || deviceTz; }catch(e){}
+    CHIPS.forEach(function(c){ var b = document.createElement('button'); b.type='button'; b.textContent=c[0]; b.dataset.tz = c[1] || deviceTz; chips.appendChild(b); });
+    chips.addEventListener('click', function(e){ var b = e.target.closest('button'); if(b) choose(b.dataset.tz); });
+    function fmtAt(o){ var d = new Date(Date.now() + o*60000); return String(d.getUTCHours()).padStart(2,'0')+':'+String(d.getUTCMinutes()).padStart(2,'0'); }
+    function render(){
+      var term = q.value.trim().toLowerCase().replace(/−/g,'-').replace(/^gmt/,'utc'), html = '', lastG = '', n = 0;
+      var t2 = q.value.trim().toLowerCase().replace(/−/g,'-');
+      build().forEach(function(z){
+        if(term){ if(z.g==='よく使う') return; if(z.key.indexOf(term)<0 && z.key.indexOf(t2)<0) return; }
+        if(z.g!==lastG){ html += '<h3>'+z.g+'</h3>'; lastG = z.g; }
+        html += '<button type="button" data-tz="'+z.tz+'"'+(z.tz===curTz?' class="cur"':'')+'><span class="c">'+z.city+'</span><span class="n">'+(z.name||'')+' · '+z.tz+'</span><span class="t"><b data-o="'+z.o+'">'+fmtAt(z.o)+'</b><small>'+offStr(z.o)+(z.ab && z.ab.indexOf('GMT')<0 && z.ab!=='UTC' ? ' · '+z.ab : '')+'</small></span></button>';
+        n++;
+      });
+      list.innerHTML = n ? html : '<p class="v-tzm-empty">見つかりませんでした</p>';
+      chips.querySelectorAll('button').forEach(function(b){ b.classList.toggle('on', b.dataset.tz===curTz); });
+    }
+    var lt;
+    function openM(){ modal.hidden = false; q.value = ''; render(); var c = list.querySelector('.cur'); if(c) c.scrollIntoView({block:'center'}); setTimeout(function(){ if(matchMedia('(pointer:fine)').matches) q.focus(); },50);
+      lt = setInterval(function(){ list.querySelectorAll('b[data-o]').forEach(function(b){ b.textContent = fmtAt(+b.dataset.o); }); }, 5000); }
+    function closeM(){ modal.hidden = true; clearInterval(lt); tzbtn.focus(); }
+    function choose(tz){ curTz = tz; try{ localStorage.setItem('vi-tz', tz); }catch(e){} setT(); label(); vt(); closeM(); }
+    function label(){ var o = 0; try{ o = offMin(curTz, new Date()); }catch(e){} var ab = abbr(curTz); $('vtzlabel').textContent = (ab && ab.indexOf('GMT')<0 ? ab+' · ' : '') + offStr(o) + ' · ' + curTz.replace(/_/g,' '); }
+    tzbtn.addEventListener('click', openM);
+    q.addEventListener('input', render);
+    list.addEventListener('click', function(e){ var b = e.target.closest('button[data-tz]'); if(b) choose(b.dataset.tz); });
+    modal.addEventListener('click', function(e){ if(e.target.hasAttribute('data-close')) closeM(); });
+    addEventListener('keydown', function(e){ if(e.key==='Escape' && !modal.hidden) closeM(); });
+    q.addEventListener('keydown', function(e){ if(e.key==='Enter'){ var b = list.querySelector('button[data-tz]'); if(b) choose(b.dataset.tz); } });
+
+    function zonedToUtc(y,mo,d,h,tz){
+      var guess = Date.UTC(y,mo-1,d,h);
+      for(var i=0;i<2;i++){
+        var p = {}; new Intl.DateTimeFormat('en-US',{timeZone:tz,hourCycle:'h23',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'}).formatToParts(new Date(guess)).forEach(function(x){ p[x.type]=x.value; });
+        guess += Date.UTC(y,mo-1,d,h) - Date.UTC(+p.year,+p.month-1,+p.day,+p.hour,+p.minute,+p.second);
+      }
+      return guess;
+    }
+    var target; function setT(){ target = zonedToUtc(2026,11,19,0,curTz); }
+    setT(); label();
+    var baseTitle = document.title, celebrated = false;
+    function pad2(n){ return String(n).padStart(2,'0'); }
+    // ---- launch celebration ----
+    var fx = $('vfx'), fg = fx.getContext('2d');
+    function burst(){
+      if(reduce) return;
+      var W = fx.width = sec.clientWidth, H = fx.height = sec.clientHeight, P = [], C = ['#ff3fa4','#2de2e6','#ffd166','#6a5cff','#ff8a3d','#fff'];
+      for(var i=0;i<260;i++){ var a = Math.random()*6.283, sp = 4+Math.random()*12;
+        P.push({x:W/2, y:Math.min(H*.45, innerHeight*.45), vx:Math.cos(a)*sp, vy:Math.sin(a)*sp-6, r:Math.random()*6.283, vr:(Math.random()-.5)*.4, w:6+Math.random()*8, h:3+Math.random()*5, c:C[i%C.length], l:0}); }
+      (function f(){
+        fg.clearRect(0,0,W,H); var alive = 0;
+        P.forEach(function(p){ if(p.l>160) return; alive++; p.l++; p.vy += .25; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+          fg.save(); fg.globalAlpha = Math.max(0, 1-p.l/160); fg.translate(p.x,p.y); fg.rotate(p.r); fg.fillStyle = p.c; fg.fillRect(-p.w/2,-p.h/2,p.w,p.h); fg.restore(); });
+        if(alive) requestAnimationFrame(f); else fg.clearRect(0,0,W,H);
+      })();
+    }
+    $('vdone').addEventListener('click', burst);
+    var last = {};
+    function put(id,val){
+      val = String(val).padStart(2,'0'); if(last[id]===val) return;
+      var first = last[id]===undefined; last[id] = val;
+      var r = $(id); r.querySelectorAll('.out').forEach(function(n){ n.remove(); });
+      var cur = r.querySelector('span');
+      if(first || reduce){ cur.textContent = val; return; }
+      cur.className = 'out'; var n = document.createElement('span'); n.className = 'in'; n.textContent = val; r.appendChild(n);
+      setTimeout(function(){ cur.remove(); }, 460);
+    }
+    function vt(){
+      var now = Date.now(), tz = curTz;
+      $('vtime').textContent = new Intl.DateTimeFormat('ja-JP',{timeZone:tz,hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).format(now);
+      var ab = ''; try{ ab = new Intl.DateTimeFormat('en-US',{timeZone:tz,timeZoneName:'short'}).formatToParts(now).filter(function(p){ return p.type==='timeZoneName'; })[0].value; }catch(e){}
+      $('vzone').textContent = new Intl.DateTimeFormat('ja-JP',{timeZone:tz,month:'long',day:'numeric',weekday:'short'}).format(now) + ' ・ ' + (longJa(tz) || ab);
+      var s = Math.max(0, Math.floor((target-now)/1000));
+      $('vcount').style.display = s ? '' : 'none'; $('vdone').style.display = s ? 'none' : 'block';
+      if(!s){ if(!celebrated && sec.classList.contains('vis')){ celebrated = true; burst(); } if(sec.classList.contains('vis')) document.title = 'OUT NOW — GTA VI'; return; }
+      put('vd', Math.floor(s/86400)); put('vh', Math.floor(s%86400/3600)); put('vm', Math.floor(s%3600/60)); put('vs', s%60);
+      $('vcount').classList.toggle('final', s < 3600);
+      $('vcount').classList.toggle('last10', s <= 10);
+      if(sec.classList.contains('vis')) document.title = pad2(Math.floor(s/3600)) + ':' + pad2(Math.floor(s%3600/60)) + ':' + pad2(s%60) + ' — GTA VI';
+    }
+    vt(); setInterval(vt,1000);
+
+    // ---- music + volume ----
+    var userOff = false, fadeT, vol = .8, volIn = $('vvol'), muteB = $('vmute'), prog = $('vprog');
+    try{ var sv = parseFloat(localStorage.getItem('vi-vol')); if(!isNaN(sv)) vol = Math.max(0, Math.min(1, sv)); }catch(e){}
+    // iPhone/iPad ではブラウザが音量変更を許可しないので、スライダーを隠してミュートだけにする
+    try{ v.volume = .5; if(v.volume !== .5) pl.classList.add('novol'); v.volume = 0; }catch(e){ pl.classList.add('novol'); }
+    var preMute = vol || .8;
+    function volUI(){
+      volIn.value = Math.round(vol*100); volIn.style.setProperty('--p', Math.round(vol*100)+'%');
+      pl.dataset.lv = vol === 0 ? 0 : vol < .5 ? 1 : 2;
+      muteB.setAttribute('aria-label', vol === 0 ? 'ミュート解除' : 'ミュート');
+    }
+    function setVol(x, save){
+      vol = Math.max(0, Math.min(1, x)); clearInterval(fadeT);
+      if(!v.muted) v.volume = vol;
+      if(pl.classList.contains('novol')) v.muted = vol === 0 || userOff;
+      volUI(); if(save !== false){ try{ localStorage.setItem('vi-vol', vol); }catch(e){} }
+    }
+    volIn.addEventListener('input', function(){ setVol(volIn.value/100); if(vol > 0 && v.paused === false && v.muted && !userOff){ v.muted = false; v.volume = vol; } });
+    muteB.addEventListener('click', function(){
+      if(vol > 0){ preMute = vol; setVol(0); }
+      else { setVol(preMute || .8); if(v.paused || v.muted){ userOff = false; soundOn(); } else { v.muted = false; } }
+    });
+    volUI();
+    function ui(p){
+      pl.classList.toggle('playing', p); pl.classList.toggle('ask', !p && !userOff);
+      $('vplay').setAttribute('aria-label', p ? '一時停止' : '再生');
+      if('mediaSession' in navigator) navigator.mediaSession.playbackState = p ? 'playing' : 'paused';
+    }
+    function fadeIn(){ clearInterval(fadeT); v.volume = 0; var tgt = vol; fadeT = setInterval(function(){ v.volume = Math.min(tgt, v.volume + tgt/20); if(v.volume >= tgt) clearInterval(fadeT); }, 80); }
+    function soundOn(){
+      v.muted = false; fadeIn();
+      return v.play().then(function(){ ui(true); }, function(){ v.muted = true; v.play().catch(function(){}); ui(false); });
+    }
+    function soundOff(){ userOff = true; clearInterval(fadeT); v.muted = true; ui(false); if(!sec.classList.contains('vis')){ v.pause(); pl.classList.remove('show'); } }
+    btn.addEventListener('click', function(){ (v.muted || v.paused) ? (userOff = false, soundOn()) : soundOff(); });
+    v.addEventListener('timeupdate', function(){ if(v.duration) prog.style.width = (v.currentTime/v.duration*100) + '%'; });
+    if('mediaSession' in navigator){
+      try{
+        navigator.mediaSession.metadata = new MediaMetadata({title:'Midnight City', artist:'M83', album:'GTA VI Countdown — ponkan.fun', artwork:[{src:'poster.webp', sizes:'1280x720', type:'image/webp'}]});
+        navigator.mediaSession.setActionHandler('play', function(){ userOff = false; soundOn(); });
+        navigator.mediaSession.setActionHandler('pause', soundOff);
+      }catch(e){}
+    }
+    addEventListener('keydown', function(e){
+      if(!pl.classList.contains('show') || /input|select|textarea/i.test(e.target.tagName) || !modal.hidden) return;
+      if(e.key === 'm' || e.key === 'M'){ muteB.click(); }
+      if(e.key === 'ArrowUp' && e.shiftKey){ e.preventDefault(); setVol(vol + .1); }
+      if(e.key === 'ArrowDown' && e.shiftKey){ e.preventDefault(); setVol(vol - .1); }
+    });
+
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){
+        var e = es[0];
+        if(e.isIntersecting){
+          sec.classList.add('on','vis'); pl.classList.add('show'); v.preload = 'auto';
+          if(!userOff && vol > 0) soundOn(); else { v.muted = true; v.play().catch(function(){}); ui(false); }
+        } else {
+          sec.classList.remove('vis'); document.title = baseTitle;
+          if(!v.muted && !v.paused) return; // 音楽が流れていたら、上に戻っても流し続ける
+          pl.classList.remove('show'); v.pause(); ui(false);
+        }
+      },{threshold:.35}).observe(sec);
+      new IntersectionObserver(function(es){ if(es[0].isIntersecting && v.preload !== 'auto'){ v.preload = 'auto'; v.load(); } }).observe(document.querySelector('.void'));
+    } else { sec.classList.add('on'); pl.classList.add('show'); }
+  })();
+
+  /* ---- VOID story ---- */
+  (function(){
+    var vd = document.getElementById('void'), lines = vd.querySelectorAll('.v-line'), depth = document.getElementById('vdepth');
+    function upd(){
+      var r = vd.getBoundingClientRect(), span = r.height - innerHeight, p = Math.max(0, Math.min(1, -r.top/span));
+      var k = r.top > innerHeight*.5 ? -1 : p < .2 ? 0 : p < .45 ? 1 : p < .7 ? 2 : 3;
+      lines.forEach(function(l){ l.classList.toggle('on', +l.dataset.k === k); });
+      depth.style.height = (p*100) + '%';
+    }
+    addEventListener('scroll', upd, {passive:true}); addEventListener('resize', upd); upd();
+  })();
 
   /* ---- copy IDs ---- */
   var toast = document.getElementById('toast'), tt;
